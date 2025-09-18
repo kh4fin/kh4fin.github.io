@@ -30,21 +30,32 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 // Form submission
 document
   .querySelector(".contact-form")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
-    // Get form values
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const subject = document.getElementById("subject").value;
     const message = document.getElementById("message").value;
 
-    // Here you would normally send the data to a server
-    // For this example, we'll just show an alert
-    alert(
-      `Thank you, ${name}! Your message has been received. I'll get back to you soon at ${email}.`
-    );
+    // No WhatsApp
+    const phoneNumber = "6283869076505";
 
-    // Reset form
-    this.reset();
+    // Message
+    const whatsappMessage = `Halo, saya ingin menghubungi Anda melalui website Anda.
+
+Nama: ${name}
+Email: ${email}
+Subjek: ${subject}
+Pesan: ${message}
+`;
+
+    // Encode message
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+
+    // create URL WhatsApp
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+    // Open new Window to WhatsApp
+    window.open(whatsappUrl, "_blank");
   });
